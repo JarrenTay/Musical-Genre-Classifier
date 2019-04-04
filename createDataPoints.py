@@ -36,7 +36,7 @@ playlist = spotify.user_playlist_tracks(userId, playlistId)
 numTracks = playlist['total']
 tracks = playlist['items']
 
-trackId = tracks[0]['track']['id']
+trackId = tracks[9]['track']['id']
 print trackId
 
 #spotify.start_playback()
@@ -44,11 +44,34 @@ aa = spotify.audio_analysis(trackId)
 #print aa['sections']
 #print len(aa['sections'])
 
+secLoudness = -100.0
+numSecs = len(aa['sections'])
+for x in xrange(numSecs):
+	print aa['sections'][x]['start']
+	if x < (numSecs * 2 / 3):
+		if secLoudness < aa['sections'][x]['loudness']:
+			loudestSec = aa['sections'][x]
+
+loudSecBegin = loudestSec['start'] - 3
+loudSecEnd = loudSecBegin + loudestSec['duration'] + 6
+
+print loudSecBegin, loudSecEnd
+
+count = 0
 for seg in aa['segments']:
-	#for num in xrange(12):
-	#	if seg['pitches'][num] == 1.0:
-	#		print num
-	#		break
-	print seg['timbre']
-	
+	if seg['start'] > loudSecBegin and seg['start'] < loudSecEnd:
+		count = count + 1
+		print seg['pitches']
+	#print seg['timbre']
+print count
 # C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+# lots of info here. What do we want?
+# We have number of segments
+# we have note chroma of each note
+# We have timbre of each note
+# We have time between each note
+
+# Basic notes: 5 notes, 4 times, 3 timbres per note? => 24 dimensions per data point
+# High bpm 2:36 song has 787 segments. 782 points. Thats a lot of points per song
+
+# Use loudest section? Loudest section was 50 secs. had 175 segments. 
