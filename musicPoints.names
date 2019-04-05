@@ -1,13 +1,10 @@
-C:      0, 1
-C#:     0, 1
-D:      0, 1
-D#:     0, 1
-E:      0, 1
-F:      0, 1
-F#:     0, 1
-G:      0, 1
-G#:     0, 1
-A:      0, 1
-A#:     0, 1
-B:      0, 1
+startNote:  C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+diff1:      continuous
+diff2:      continuous
+diff3:      continuous
+diff4:      continuous
+timb1:      continuous
+timb2:      continuous
+timb3:      continuous
+key:        C, C#, D, D#, E, F, F#, G, G#, A, A#, B
 
