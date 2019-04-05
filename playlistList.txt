@@ -8,8 +8,8 @@ Latin,spotify:user:spotify:playlist:37i9dQZF1DX10zKzsJ2jva
 Latin,spotify:user:spotify:playlist:37i9dQZF1DX3omIq8ziEt6
 EDM,spotify:user:spotify:playlist:37i9dQZF1DX4dyzvuaRJ0n
 EDM,spotify:user:spotify:playlist:37i9dQZF1DX8tZsk68tuDw
-Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DX4SBhb3fqCJd
-Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DX2UgsUIg75Vg
+Soul-R&B,spotify:user:spotify:playlist:37i9dQZF1DX4SBhb3fqCJd
+Soul-R&B,spotify:user:spotify:playlist:37i9dQZF1DX2UgsUIg75Vg
 Rock,spotify:user:spotify:playlist:37i9dQZF1DXcF6B6QPhFDv
 Rock,spotify:user:spotify:playlist:37i9dQZF1DX82GYcclJ3Ug
 Indie,spotify:user:spotify:playlist:37i9dQZF1DX2Nc3B70tvx0

@@ -27,6 +27,10 @@ spotify = spotipy.Spotify(auth=token)
 
 playlistListFile = open('playlistList.txt', 'r')
 
+#skipNum = 10
+#for _ in xrange(skipNum):
+#    playlistListFile.readline()
+
 playlistListRaw = playlistListFile.read()
 
 playlistList = playlistListRaw.split('\n')
@@ -47,6 +51,10 @@ for playlistRaw in playlistList:
             print trackId
             
             aa = spotify.audio_analysis(trackId)
+            
+            if aa = None:
+                print 'Could not get Track'
+                break;
             track = spotify.track(trackId)
             print track['name']
             
