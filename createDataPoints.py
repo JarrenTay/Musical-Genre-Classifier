@@ -40,30 +40,62 @@ trackId = tracks[9]['track']['id']
 print trackId
 
 #spotify.start_playback()
-aa = spotify.audio_analysis(trackId)
+#aa = spotify.audio_analysis(trackId)
+aa = spotify.audio_analysis('7e7VjLxO5xJINHvnRytrqi')
 #print aa['sections']
 #print len(aa['sections'])
 
 secLoudness = -100.0
 numSecs = len(aa['sections'])
+secStarts = list()
 for x in xrange(numSecs):
 	print aa['sections'][x]['start']
-	if x < (numSecs * 2 / 3):
-		if secLoudness < aa['sections'][x]['loudness']:
-			loudestSec = aa['sections'][x]
+	secStarts.append(aa['sections'][x]['start'])
 
-loudSecBegin = loudestSec['start'] - 3
-loudSecEnd = loudSecBegin + loudestSec['duration'] + 6
+print secStarts
 
-print loudSecBegin, loudSecEnd
+divList = list()
+for _ in xrange(len(aa['sections']) + 1):
+	divList.append(list())
+
+numSegs = len(aa['segments'])
+for y in xrange(numSegs):
+	for z in xrange(len(secStarts)):
+		#print aa['segments'][y]['start'], secStarts[z]
+		if (aa['segments'][y]['start'] < secStarts[z]):
+			sectionNum = z - 1;
+			break
+		sectionNum = z
+	count = 0
+	for note in aa['segments'][y]['pitches']:
+		if note == 1.0:
+			divList[sectionNum].append(count)
+			break
+		count = count + 1
+
+printed = True
+oString = ''
+index = 0
+while(printed):
+	printed = False
+	for lis in divList:
+		if len(lis) > (index + 1):
+			printed = True
+			oString = oString + str(lis[index]) + '\t'
+		else:
+			oString = oString + '\t'
+	oString = oString + '\n'
+	index = index + 1
+	
+print oString
 
 count = 0
-for seg in aa['segments']:
-	if seg['start'] > loudSecBegin and seg['start'] < loudSecEnd:
-		count = count + 1
-		print seg['pitches']
+#for seg in aa['segments']:
+	#if seg['start'] > loudSecBegin and seg['start'] < loudSecEnd:
+	#	count = count + 1
+	#	print seg['pitches']
 	#print seg['timbre']
-print count
+#print count
 # C, C#, D, D#, E, F, F#, G, G#, A, A#, B
 # lots of info here. What do we want?
 # We have number of segments
