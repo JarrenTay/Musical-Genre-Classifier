@@ -85,6 +85,10 @@ with open('data/musicPoints.data', 'w+') as dataFile:
             numTracks = playlist['total']
             trackList = playlist['items']
             for track in trackList:
+                if track['track'] == None:
+                    break
+                if track['track']['id'] == None:
+                    break
                 trackId = track['track']['id']
                 if trackId not in seenTracks[category]:
                     seenTracks[category].add(trackId)
