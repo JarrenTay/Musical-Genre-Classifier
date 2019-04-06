@@ -18,16 +18,8 @@ username = info.readline()[:-1]
 clientId = info.readline()[:-1]
 clientSecret = info.readline()[:-1]
 redirect = info.readline()[:-1]
-#password = getpass()
 
 scope = 'user-library-read app-remote-control streaming'
-
-#token = util.prompt_for_user_token(username,scope,client_id=clientId,client_secret=clientSecret,redirect_uri=redirect)
-
-#if token:
-#    print 'Success!'
-#else:
-#    print('Failed...')
 
 spotifyAuth = spotipy.oauth2.SpotifyOAuth(clientId, clientSecret, redirect, None, scope)
 
@@ -98,7 +90,7 @@ with open('data/musicPoints.data', 'w+') as dataFile:
 
                     if aa == None:
                         print 'Could not get Track'
-                        break;
+                        break
                     track = spotify.track(trackId)
                     print(category + ' - ' + track['name'].encode("utf-8"))
 
