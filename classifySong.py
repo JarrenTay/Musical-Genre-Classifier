@@ -40,7 +40,7 @@ artistString = ''
 for artist in track['artists']:
     artistString = artistString + artist['name'].encode("utf-8") + ', '
 
-print track['name'].encode('utf-8') + ' - ' + artistString[:-2] + '\n'
+print track['name'].encode('utf-8') + ' by ' + artistString[:-2] + '\n'
 
 
 # C, C#, D, D#, E, F, F#, G, G#, A, A#, B
@@ -137,17 +137,17 @@ for label in predictLabels:
 #print classDict
 
 classTot = float(len(dataList)) / 100
-
 topX = min(5, len(classDict))
+print 'Likely Genres:'
 
-for _ in xrange(topX):
+for rank in xrange(topX):
     maxKey = ''
     maxVal = -1
     for key, val in classDict.iteritems():
         if val > maxVal:
             maxKey = key
             maxVal = val
-    print maxKey + '\t - ' + "{:.2f}".format(maxVal / classTot) + '% match'
+    print str(rank + 1) + '. ' + maxKey
     del classDict[maxKey]
 
 
