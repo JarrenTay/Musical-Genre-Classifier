@@ -86,8 +86,10 @@ with open('data/musicPoints.data', 'w+') as dataFile:
             trackList = playlist['items']
             for track in trackList:
                 if track['track'] == None:
+                    print 'Track not available'
                     break
                 if track['track']['id'] == None:
+                    print 'Track not available'
                     break
                 trackId = track['track']['id']
                 if trackId not in seenTracks[category]:
@@ -169,9 +171,9 @@ with open('data/musicPoints.data', 'w+') as dataFile:
                                 dataString += '1'
                                 dataString += ',0' * (11 - closestSection['key'])
                                 dataString += '\n'
+                                dataFile.write(dataString)
+                                labelFile.write(category + '\n')
                             else:
                                 break
-                        dataFile.write(dataString)
-                        labelFile.write(category + '\n')
                 else:
                     print('Duplicate song')
