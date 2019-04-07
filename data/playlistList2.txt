@@ -1,15 +1,19 @@
-Pop,spotify:user:spotify:playlist:37i9dQZF1DXcBWIGoYBM5M
-Pop,spotify:user:spotify:playlist:37i9dQZF1DWUa8ZRTfalHk
-Hip-Hop,spotify:user:spotify:playlist:37i9dQZF1DX0XUsuxWHRQd
-Hip-Hop,spotify:user:spotify:playlist:37i9dQZF1DWY4xHQp97fN6
+Pop / K-pop / Kids,spotify:user:spotify:playlist:37i9dQZF1DXcBWIGoYBM5M
+Pop / K-pop / Kids,spotify:user:spotify:playlist:37i9dQZF1DWUa8ZRTfalHk
+Pop / K-pop / Kids,spotify:user:spotify:playlist:37i9dQZF1DX9tPFwDMOaN1
+Pop / K-pop / Kids,spotify:user:spotify:playlist:37i9dQZF1DX14fiWYoe7Oh
+Pop / K-pop / Kids,spotify:user:spotify:playlist:37i9dQZF1DWZhxU4AiByxO
+Pop / K-pop / Kids,spotify:user:spotify:playlist:37i9dQZF1DWVs8I62NcHks
+Hip-Hop / Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DX0XUsuxWHRQd
+Hip-Hop / Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DWY4xHQp97fN6
+Hip-Hop / Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DX4SBhb3fqCJd
+Hip-Hop / Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DX2UgsUIg75Vg
 Country,spotify:user:spotify:playlist:37i9dQZF1DX1lVhptIYRda
 Country,spotify:user:spotify:playlist:37i9dQZF1DX5mB2C8gBeUM
 Latin,spotify:user:spotify:playlist:37i9dQZF1DX10zKzsJ2jva
 Latin,spotify:user:spotify:playlist:37i9dQZF1DX3omIq8ziEt6
 EDM,spotify:user:spotify:playlist:37i9dQZF1DX4dyzvuaRJ0n
 EDM,spotify:user:spotify:playlist:37i9dQZF1DX8tZsk68tuDw
-Soul-R&B,spotify:user:spotify:playlist:37i9dQZF1DX4SBhb3fqCJd
-Soul-R&B,spotify:user:spotify:playlist:37i9dQZF1DX2UgsUIg75Vg
 Rock,spotify:user:spotify:playlist:37i9dQZF1DXcF6B6QPhFDv
 Rock,spotify:user:spotify:playlist:37i9dQZF1DX82GYcclJ3Ug
 Indie,spotify:user:spotify:playlist:37i9dQZF1DX2Nc3B70tvx0
@@ -23,7 +27,7 @@ Jazz,spotify:user:spotify:playlist:37i9dQZF1DX4wta20PHgwo
 Christian,spotify:user:spotify:playlist:37i9dQZF1DXcb6CQIjdqKy
 Christian,spotify:user:spotify:playlist:37i9dQZF1DWVYgpMbMPJMz
 Arab,spotify:user:spotify:playlist:37i9dQZF1DX5cO1uP1XC1g
-Arab,spotify:user:spotify:playlist:37i9dQZF1DX68x6hand0cN
+Arab,spotify:user:spotify:playlist:37i9dQZF1DWWkrGNlIHxPl
 Desi,spotify:user:spotify:playlist:37i9dQZF1DWTwzVdyRpXm1
 Desi,spotify:user:spotify:playlist:37i9dQZF1DWYKzhEkKdUkK
 Afro,spotify:user:spotify:playlist:37i9dQZF1DWYkaDif7Ztbp
@@ -38,7 +42,4 @@ Punk,spotify:user:spotify:playlist:37i9dQZF1DXa9wYJr1oMFq
 Punk,spotify:user:spotify:playlist:37i9dQZF1DX3LDIBRoaCDQ
 Funk,spotify:user:spotify:playlist:37i9dQZF1DX1MUPbVKMgJE
 Funk,spotify:user:spotify:playlist:37i9dQZF1DX70TzPK5buVf
-Kids,spotify:user:spotify:playlist:37i9dQZF1DWZhxU4AiByxO
-Kids,spotify:user:spotify:playlist:37i9dQZF1DWVs8I62NcHks
-K-Pop,spotify:user:spotify:playlist:37i9dQZF1DX9tPFwDMOaN1
-K-Pop,spotify:user:spotify:playlist:37i9dQZF1DX14fiWYoe7Oh
+
