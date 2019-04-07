@@ -14,6 +14,10 @@ import genDataPoints
 
 posToNote = {0: 'C', 1: 'C#', 2: 'D', 3: 'D#', 4: 'E', 5: 'F', 6: 'F#', 7: 'G', 8: 'G#', 9: 'A', 10: 'A#', 11: 'B'}
 
+dataPointVersion = 1
+if len(sys.argv) > 1:
+    dataPointVersion = int(sys.argv[1])
+
 info = open('ssh', 'r')
 username = info.readline()[:-1]
 clientId = info.readline()[:-1]
@@ -44,14 +48,14 @@ refreshToken = responseDict['refresh_token']
 tokenRefreshed = time.time()
 
 spotify = spotipy.Spotify(auth=accessToken)
-playlistListFile = open('playlistList.txt', 'r')
+playlistListFile = open('data/playlistList' + str(dataPointVersion) + '.txt', 'r')
 playlistListRaw = playlistListFile.read()
 playlistList = playlistListRaw.split('\n')
 
 seenTracks = dict()
 
-with open('data/musicPoints.data', 'w+') as dataFile:
-    with open('data/musicPoints.labels', 'w+') as labelFile:
+with open('data/musicPoints' + str(dataPointVersion) + '.data', 'w+') as dataFile:
+    with open('data/musicPoints' + str(dataPointVersion) + '.labels', 'w+') as labelFile:
         for playlistRaw in playlistList:
             timeNow = time.time()
             if ((timeNow - tokenRefreshed) > (3600 - 300)):
@@ -129,7 +133,7 @@ with open('data/musicPoints.data', 'w+') as dataFile:
 
                     dataString = ''
                     pointCount = 0
-                    for dataList in genDataPoints.genData1(aa, closestSectionStart, closestSectionEnd, closestSection):
+                    for dataList in genDataPoints.genData(aa, closestSectionStart, closestSectionEnd, closestSection, dataPointVersion):
                         for data in dataList:
                             dataString += str(data) + ','
                         dataString = dataString[:-1] + '\n'

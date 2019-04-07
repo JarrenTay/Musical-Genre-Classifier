@@ -11,7 +11,11 @@ import numpy as np
 from joblib import load
 import genDataPoints
 
-bestClf, labelDict = load('data/musicPoints.tree')
+dataPointVersion = 1
+if len(sys.argv) > 2:
+    dataPointVersion = int(sys.argv[1])
+
+bestClf, labelDict = load('data/musicPoints' + str(dataPointVersion) + '.tree')
 
 info = open('ssh', 'r')
 username = info.readline()[:-1]
@@ -75,7 +79,7 @@ if closestSection == None:
             closestSection = section
             break
 
-dataList = genDataPoints.genData1(aa, closestSectionStart, closestSectionEnd, closestSection)
+dataList = genDataPoints.genData(aa, closestSectionStart, closestSectionEnd, closestSection, dataPointVersion)
 dataFloatList = list()
 for data in dataList:
     dataFloatList.append([float(dataDim) for dataDim in data])

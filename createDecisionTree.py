@@ -7,6 +7,9 @@ import numpy as np
 import graphviz
 from joblib import dump
 
+dataPointVersion = 1
+if len(sys.argv) > 1:
+    dataPointVersion = int(sys.argv[1])
 
 # TwoWayDict - credit to Sasha Chedygov (Stack Overflow)
 # ------------------------------------------------------
@@ -31,8 +34,8 @@ labelDict = TwoWayDict()
 dataList = list()
 labelList = list()
 
-with open('data/musicPoints.data', 'r') as dataFile:
-    with open('data/musicPoints.labels', 'r') as labelFile:
+with open('data/musicPoints' + str(dataPointVersion) + '.data', 'r') as dataFile:
+    with open('data/musicPoints' + str(dataPointVersion) + '.labels', 'r') as labelFile:
         numLabels = 0
         for dataLine in dataFile:
             dataListRaw = dataLine[:-1].split(',')
@@ -69,5 +72,5 @@ for key, val in labelDict.iteritems():
     if type(key) == int:
         labelDict2[key] = val
 
-dump((bestClf, labelDict2), 'data/musicPoints.tree')
+dump((bestClf, labelDict2), 'data/musicPoints' + str(dataPointVersion) + '.tree')
 
