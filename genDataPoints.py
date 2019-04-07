@@ -112,13 +112,13 @@ def _genData3(aa, csStart, csEnd, cs):
         if segment['start'] > csStart:
             if segment['start'] < csEnd:
                 data.append(cs['mode'])
-                data.extend(segment['timbre'][0:7])
+                data.extend(segment['timbre'][0:8])
                 for _ in xrange(cs['key']):
                     data.append(0)
                 data.append(1)
                 for _ in xrange(11 - cs['key']):
                     data.append(0)
-                if len(data) == 28:
+                if len(data) == 21:
                     dataList.append(data)
             else:
                 break

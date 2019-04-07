@@ -39,96 +39,95 @@ else:
     tracks = [song['track']['id'] for song in spotify.user_playlist_tracks(trackUrlList[2], trackUrlList[4])['items']]
 
 songNum = 0
-for trackId in tracks:
-    songNum = songNum + 1
-    aa = spotify.audio_analysis(trackId)
-    
-    if aa == None:
-        print 'Could not get Track'
-        sys.exit()
-    track = spotify.track(trackId)
-    
-    artistString = ''
-    for artist in track['artists']:
-        artistString = artistString + artist['name'].encode("utf-8") + ', '
-    
-    print str(songNum) + '.\t' + track['name'].encode('utf-8') + ' by ' + artistString[:-2] + '\n'
-    
-    
-    # C, C#, D, D#, E, F, F#, G, G#, A, A#, B
-    # Chorus is usually around 25% of the songs duration
-    # Let's determine this time, and give a 5% leniency for segment timing.
-    # Cap the chorus at 25 seconds.
-    # Create datapoints that that has the starting note, four floats that describe increase or decrease in pitch, the timbre of the first note, and the key of the song.
-    # One hot encoding is used for naive bayes, which would not be good in this case.
-    
-    melodyStartGuess = track['duration_ms'] / 4000
-    melodyThreshold = (track['duration_ms'] - (track['duration_ms'] * 0.95)) / 1000
-    
-    closestSection = None
-    closestSectionStart = melodyStartGuess
-    closestSectionEnd = melodyStartGuess + 25
-    closestSectionDist = melodyThreshold
-    for section in aa['sections']:
-        sectionDist = abs(section['start'] - melodyStartGuess)
-        if sectionDist < closestSectionDist:
-            closestSection = section
-            closestSectionStart = section['start']
-            closestSectionDist = sectionDist
-            if section['duration'] < 25:
-                closestSectionEnd = section['start'] + section['duration']
-            else:
-                closestSectionEnd = section['start'] + 25
-    
-    if closestSection == None:
+with open('data/musicPoints' + str(dataPointVersion) + '.class', 'w+') as classFile:
+    outString = ''
+    for trackId in tracks:
+        songNum = songNum + 1
+        aa = spotify.audio_analysis(trackId)
+        
+        if aa == None:
+            print 'Could not get Track'
+            sys.exit()
+        track = spotify.track(trackId)
+        
+        artistString = ''
+        for artist in track['artists']:
+            artistString = artistString + artist['name'].replace(',', '').encode("utf-8") + ' + '
+        
+        outString += track['name'].replace(',', '').encode('utf-8') + ','
+        print track['name'].encode('utf-8') + ' by ' + artistString[:-3]
+        outString += artistString[:-3] + ','
+        
+        # C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+        # Chorus is usually around 25% of the songs duration
+        # Let's determine this time, and give a 5% leniency for segment timing.
+        # Cap the chorus at 25 seconds.
+        # Create datapoints that that has the starting note, four floats that describe increase or decrease in pitch, the timbre of the first note, and the key of the song.
+        # One hot encoding is used for naive bayes, which would not be good in this case.
+        
+        melodyStartGuess = track['duration_ms'] / 4000
+        melodyThreshold = (track['duration_ms'] - (track['duration_ms'] * 0.95)) / 1000
+        
+        closestSection = None
+        closestSectionStart = melodyStartGuess
+        closestSectionEnd = melodyStartGuess + 25
+        closestSectionDist = melodyThreshold
         for section in aa['sections']:
-            sectionEnd = section['start'] + section['duration']
-            if (sectionEnd) > closestSectionStart:
+            sectionDist = abs(section['start'] - melodyStartGuess)
+            if sectionDist < closestSectionDist:
                 closestSection = section
-                break
-    
-    dataList = genDataPoints.genData(aa, closestSectionStart, closestSectionEnd, closestSection, dataPointVersion)
-    if len(dataList) > 0:
-        dataFloatList = list()
-        for data in dataList:
-            dataFloatList.append([float(dataDim) for dataDim in data])
+                closestSectionStart = section['start']
+                closestSectionDist = sectionDist
+                if section['duration'] < 25:
+                    closestSectionEnd = section['start'] + section['duration']
+                else:
+                    closestSectionEnd = section['start'] + 25
         
-        npData = np.array(dataFloatList)
-        npPredictLabels = bestClf.predict(npData)
+        if closestSection == None:
+            for section in aa['sections']:
+                sectionEnd = section['start'] + section['duration']
+                if (sectionEnd) > closestSectionStart:
+                    closestSection = section
+                    break
         
-        predictLabels = npPredictLabels.tolist()
+        dataList = genDataPoints.genData(aa, closestSectionStart, closestSectionEnd, closestSection, dataPointVersion)
+        if len(dataList) > 0:
+            dataFloatList = list()
+            for data in dataList:
+                dataFloatList.append([float(dataDim) for dataDim in data])
+            
+            npData = np.array(dataFloatList)
+            npPredictLabels = bestClf.predict(npData)
+            
+            predictLabels = npPredictLabels.tolist()
+            
+            classDict = dict()
+            
+            for label in predictLabels:
+                if labelDict[label] not in classDict:
+                    classDict[labelDict[label]] = 0
+                classDict[labelDict[label]] = classDict[labelDict[label]] + 1
+            
+            classTot = float(len(dataList)) / 100
+            topX = min(5, len(classDict))
+            
+            topList = list()
+            for rank in xrange(topX):
+                maxKey = ''
+                maxVal = -1
+                for key, val in classDict.iteritems():
+                    if val > maxVal:
+                        maxKey = key
+                        maxVal = val
+                topList.append(maxKey)
+                del classDict[maxKey]
         
-        classDict = dict()
-        
-        for label in predictLabels:
-            if labelDict[label] not in classDict:
-                classDict[labelDict[label]] = 0
-            classDict[labelDict[label]] = classDict[labelDict[label]] + 1
-        
-        classTot = float(len(dataList)) / 100
-        topX = min(5, len(classDict))
-        
-        outString = 'Likely Genres: '
-        topList = list()
-        for rank in xrange(topX):
-            maxKey = ''
-            maxVal = -1
-            for key, val in classDict.iteritems():
-                if val > maxVal:
-                    maxKey = key
-                    maxVal = val
-            topList.append(maxKey)
-            del classDict[maxKey]
-    
-        if len(trackUrlList) == 3:
-            outString += '\n'
-            for rank in xrange(len(topList)):
-                outString += str(rank + 1) + '. \t' + topList[rank] + '\n'
-        else:
-            outString += '\t'
+            genreOut = ''
             for genre in topList:
-                outString += genre + '\t'
+                genreOut += genre + ','
+    
+            outString += genreOut[:-1] + '\n'
+        else:
+            outString += "Could not generate data and classify\n"
 
-        print outString + '\n'
-    else:
-        print "Could not generate data and classify"
+    classFile.write(outString)
