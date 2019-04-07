@@ -9,6 +9,7 @@ from joblib import dump
 
 
 # TwoWayDict - credit to Sasha Chedygov (Stack Overflow)
+# ------------------------------------------------------
 class TwoWayDict(dict):
     def __setitem__(self, key, value):
         if key in self:
@@ -24,6 +25,7 @@ class TwoWayDict(dict):
 
     def __len__(self):
         return dict.__len__(self) // 2
+# ------------------------------------------------------
 
 labelDict = TwoWayDict()
 dataList = list()
@@ -48,14 +50,6 @@ with open('data/musicPoints.data', 'r') as dataFile:
 npData = np.array(dataList)
 npLabels = np.array(labelList)
 
-targetNamesList = list()
-for labelId in xrange(numLabels):
-    targetNamesList.append(labelDict[labelId])
-
-targetNames = np.array(targetNamesList, dtype='|S10')
-
-featureNames = ['startC', 'startC#', 'startD', 'startD#', 'startE', 'startF', 'startF#', 'startG', 'startG#', 'startA', 'startA#', 'startB', 'diff1', 'diff2', 'diff3', 'diff4', 'timb1', 'timb2', 'timb3', 'keyC', 'keyC#', 'keyD', 'keyD#', 'keyE', 'keyF', 'keyF#', 'keyG', 'keyG#', 'keyA', 'keyA#', 'keyB']
-
 kf = KFold(n_splits = 5, shuffle = True)
 bestClf = None
 bestClfScore = 0
@@ -64,10 +58,8 @@ for trainIndex, testIndex in kf.split(npData):
     labelTrain, labelTest = npLabels[trainIndex], npLabels[testIndex]
 
     clf = tree.DecisionTreeClassifier(max_depth = None)
-    #cross_val_score(clf, npData, npLabels, cv = 10)
     clf = clf.fit(np.array(dataTrain), np.array(labelTrain))
     score = clf.score(np.array(dataTest), np.array(labelTest))
-    #print score
     if score > bestClfScore:
         bestClfScore = score
         bestClf = clf
@@ -77,6 +69,5 @@ for key, val in labelDict.iteritems():
     if type(key) == int:
         labelDict2[key] = val
 
-#dump(labelDict2, 'data/musicPoints.labelDict')
 dump((bestClf, labelDict2), 'data/musicPoints.tree')
 

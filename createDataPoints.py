@@ -8,6 +8,7 @@ import webbrowser
 import json
 import base64
 import time
+import genDataPoints
 
 #read ssh file to get username, client_id, and client_secret
 
@@ -126,46 +127,14 @@ with open('data/musicPoints.data', 'w+') as dataFile:
                                 closestSection = section
                                 break
 
-                    for segmentNum in xrange(len(aa['segments']) - 4):
-                        #print segmentNum
-                        segment = aa['segments'][segmentNum]
-                        dataString = ''
-                        if segment['start'] > closestSectionStart:
-                            if segment['start'] < closestSectionEnd:
-                                noteCount = 0
-                                noteNum = -1
-                                NUM_NOTES = 12
-                                for note in segment['pitches']:
-                                    if note == 1.00:
-                                        noteNum = noteCount
-                                        dataString+=('1,')
-                                    else:
-                                        dataString+=('0,')
-                                    noteCount = noteCount + 1
-                                for nextSegNums in xrange(1, 5):
-                                    nextSegment = aa['segments'][segmentNum + nextSegNums]
-                                    noteCount = 0
-                                    for note in nextSegment['pitches']:
-                                        if note == 1.00:
-                                            noteDiff = noteCount - noteNum
-                                            if noteDiff > 6:
-                                                noteDiff = noteDiff - 12
-                                            elif noteDiff < -5:
-                                                noteDiff = noteDiff + 12
-                                            # Possible ranges are -5 - 6.
-                                            dataString += (str(noteDiff) + ',')
-                                            noteNum = noteCount
-                                            break
-                                        noteCount = noteCount + 1
-                                for timNum in xrange(3):
-                                    dataString += (str(segment['timbre'][timNum]) + ',')
-                                dataString += '0,' * closestSection['key']
-                                dataString += '1'
-                                dataString += ',0' * (11 - closestSection['key'])
-                                dataString += '\n'
-                                dataFile.write(dataString)
-                                labelFile.write(category + '\n')
-                            else:
-                                break
+                    dataString = ''
+                    pointCount = 0
+                    for dataList in genDataPoints.genData1(aa, closestSectionStart, closestSectionEnd, closestSection):
+                        for data in dataList:
+                            dataString += str(data) + ','
+                        dataString = dataString[:-1] + '\n'
+                        pointCount += 1
+                    dataFile.write(dataString)
+                    labelFile.write((category + '\n') * pointCount)
                 else:
                     print('Duplicate song')

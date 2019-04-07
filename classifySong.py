@@ -9,9 +9,9 @@ import base64
 import time
 import numpy as np
 from joblib import load
+import genDataPoints
 
 bestClf, labelDict = load('data/musicPoints.tree')
-#labelDict = load('data/musicPoints.labelDict')
 
 info = open('ssh', 'r')
 username = info.readline()[:-1]
@@ -75,54 +75,12 @@ if closestSection == None:
             closestSection = section
             break
 
-dataList = list()
+dataList = genDataPoints.genData1(aa, closestSectionStart, closestSectionEnd, closestSection)
+dataFloatList = list()
+for data in dataList:
+    dataFloatList.append([float(dataDim) for dataDim in data])
 
-for segmentNum in xrange(len(aa['segments']) - 4):
-    #print segmentNum
-    segment = aa['segments'][segmentNum]
-    dataFloat = list()
-    if segment['start'] > closestSectionStart:
-        if segment['start'] < closestSectionEnd:
-            noteCount = 0
-            noteNum = -1
-            NUM_NOTES = 12
-            for note in segment['pitches']:
-                if note == 1.00:
-                    noteNum = noteCount
-                    dataFloat.append(float(1))
-                else:
-                    dataFloat.append(float(0))
-                noteCount = noteCount + 1
-            for nextSegNums in xrange(1, 5):
-                nextSegment = aa['segments'][segmentNum + nextSegNums]
-                noteCount = 0
-                for note in nextSegment['pitches']:
-                    if note == 1.00:
-                        noteDiff = noteCount - noteNum
-                        if noteDiff > 6:
-                            noteDiff = noteDiff - 12
-                        elif noteDiff < -5:
-                            noteDiff = noteDiff + 12
-                        # Possible ranges are -5 - 6.
-                        dataFloat.append(float(noteDiff))
-                        noteNum = noteCount
-                        break
-                    noteCount = noteCount + 1
-            for timNum in xrange(3):
-                dataFloat.append(float(segment['timbre'][timNum]))
-            for _ in xrange(closestSection['key']):
-                dataFloat.append(float(0))
-            dataFloat.append(float(1))
-            for _ in xrange(11 - closestSection['key']):
-                dataFloat.append(float(0))
-            npDataFloat = np.array(dataFloat)
-            dataList.append(dataFloat)
-        else:
-            break
-
-#print dataList
-
-npData = np.array(dataList)
+npData = np.array(dataFloatList)
 npPredictLabels = bestClf.predict(npData)
 
 predictLabels = npPredictLabels.tolist()
@@ -133,8 +91,6 @@ for label in predictLabels:
     if labelDict[label] not in classDict:
         classDict[labelDict[label]] = 0
     classDict[labelDict[label]] = classDict[labelDict[label]] + 1
-
-#print classDict
 
 classTot = float(len(dataList)) / 100
 topX = min(5, len(classDict))
