@@ -46,7 +46,8 @@ def _genData1(aa, csStart, csEnd, cs):
                 data.append(1)
                 for _ in xrange(11 - cs['key']):
                     data.append(0)
-                dataList.append(data)
+                if len(data) == 31:
+                    dataList.append(data)
             else:
                 break
     return dataList
@@ -92,12 +93,38 @@ def _genData2(aa, csStart, csEnd, cs):
                 data.append(1)
                 for _ in xrange(11 - cs['key']):
                     data.append(0)
-                dataList.append(data)
+                if len(data) == 28:
+                    dataList.append(data)
             else:
                 break
     return dataList
 
-gdVersions = {1: _genData1, 2: _genData2}
+# Creates a data point with 21 dimensions:
+# Modality                              (1 dimension)
+# Eight vectors of timbre               (8 dimensions)
+# Key of song (one-hot encoded)         (12 dimensions)
+def _genData3(aa, csStart, csEnd, cs):
+    dataList = list()
+    
+    for segmentNum in xrange(len(aa['segments']) - 4):
+        segment = aa['segments'][segmentNum]
+        data = list()
+        if segment['start'] > csStart:
+            if segment['start'] < csEnd:
+                data.append(cs['mode'])
+                data.extend(segment['timbre'][0:7])
+                for _ in xrange(cs['key']):
+                    data.append(0)
+                data.append(1)
+                for _ in xrange(11 - cs['key']):
+                    data.append(0)
+                if len(data) == 28:
+                    dataList.append(data)
+            else:
+                break
+    return dataList
+
+gdVersions = {1: _genData1, 2: _genData2, 3: _genData3}
 
 # Selector for which function genData function to use
 def genData(aa, csStart, csEnd, cs, gdVer):

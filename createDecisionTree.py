@@ -67,7 +67,7 @@ for trainIndex, testIndex in kf.split(npData):
         bestClfScore = score
         bestClf = clf
 
-print 'Decision Tree Score: ' + '{.3f}'.format(score * 100)
+print 'Decision Tree Score: ' + '{:.2f}'.format(score.item() * 100)
 
 labelDict2 = dict()
 for key, val in labelDict.iteritems():
