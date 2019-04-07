@@ -8,7 +8,7 @@ codeSpan.id = "codeSpan";
 var codeSpanContent = document.createTextNode(code);
 codeSpan.appendChild(codeSpanContent);
 
-var phSpan = document.getElementById("placeholder");
+var phSpan = document.getElementById('placeholder');
 var parentDiv = phSpan.parentNode;
 
 parentDiv.replaceChild(codeSpan, phSpan);
