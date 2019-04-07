@@ -35,8 +35,8 @@ URL = URL + '&redirect_uri=' + redirect
 URL = URL + '&scope=' + scope
  
 webbrowser.open(URL)
-requestCodeURL = raw_input('Please enter the website URL that you were redirected to: \n')
-requestCode = (requestCodeURL.split('='))[1]
+requestCodeURL = raw_input('Please enter the code / url from the website you were redirected to: \n')
+requestCode = (requestCodeURL.split('='))[-1]
 URL = spotifyAuth.OAUTH_TOKEN_URL
 PARAMS = {'grant_type': "authorization_code", 'code': requestCode, 'redirect_uri': redirect, 'client_id': clientId, 'client_secret': clientSecret}
 r = requests.post(URL, PARAMS)
