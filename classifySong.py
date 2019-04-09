@@ -39,7 +39,7 @@ else:
     tracks = [song['track']['id'] for song in spotify.user_playlist_tracks(trackUrlList[2], trackUrlList[4])['items']]
 
 songNum = 0
-with open('data/musicPoints' + str(dataPointVersion) + '.class', 'w+') as classFile:
+with open('data/musicPoints' + str(dataPointVersion) + '.class', 'a+') as classFile:
     outString = ''
     for trackId in tracks:
         songNum = songNum + 1
