@@ -127,6 +127,7 @@ with open('data/musicPoints' + str(dataPointVersion) + '.class', 'a+') as classF
                 genreOut += genre + ','
     
             outString += genreOut[:-1] + '\n'
+            print genreOut[:-1] + '\n'
         else:
             outString += "Could not generate data and classify\n"
 
