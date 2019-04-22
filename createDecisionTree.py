@@ -1,11 +1,14 @@
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
+from sklearn.externals.six import StringIO
 from sklearn import tree
 import sys
 import os
 import numpy as np
 import graphviz
+import pydot
 from joblib import dump
+import genDataPoints
 
 dataPointVersion = 1
 if len(sys.argv) > 1:
@@ -60,14 +63,19 @@ for trainIndex, testIndex in kf.split(npData):
     dataTrain, dataTest = npData[trainIndex], npData[testIndex]
     labelTrain, labelTest = npLabels[trainIndex], npLabels[testIndex]
 
-    clf = tree.DecisionTreeClassifier(max_depth = None)
+    clf = tree.DecisionTreeClassifier(max_depth = 7)
     clf = clf.fit(np.array(dataTrain), np.array(labelTrain))
     score = clf.score(np.array(dataTest), np.array(labelTest))
     if score > bestClfScore:
         bestClfScore = score
         bestClf = clf
 
+dataLabels = genDataPoints.genLabels(dataPointVersion)
 print 'Decision Tree Score: ' + '{:.2f}'.format(score.item() * 100)
+dot_data = StringIO()
+tree.export_graphviz(bestClf, out_file = dot_data, feature_names = dataLabels.featureNames, class_names = dataLabels.classNames)
+graph = pydot.graph_from_dot_data(dot_data.getvalue())
+graph[0].write_pdf('data/musicPointsTree' + str(dataPointVersion) + '.pdf')
 
 labelDict2 = dict()
 for key, val in labelDict.iteritems():

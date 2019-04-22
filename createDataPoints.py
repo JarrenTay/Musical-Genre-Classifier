@@ -91,7 +91,12 @@ with open('data/musicPoints' + str(dataPointVersion) + '.data', 'w+') as dataFil
                 trackId = track['track']['id']
                 if trackId not in seenTracks[category]:
                     seenTracks[category].add(trackId)
-                    aa = spotify.audio_analysis(trackId)
+
+                    try:
+                        aa = spotify.audio_analysis(trackId)
+                    except:
+                        print 'Could not get analysis'
+                        break
 
                     if aa == None:
                         print 'Could not get Track'
