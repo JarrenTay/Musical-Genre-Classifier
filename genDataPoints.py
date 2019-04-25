@@ -151,9 +151,9 @@ def _genLabel3():
     dataLabel = DataLabel(np.array(featureNames), np.array(classNames))
     return dataLabel
 
-gdVersions = {1: _genData1, 2: _genData2, 3: _genData3}
+gdVersions = {1: _genData1, 2: _genData2, 3: _genData3, 4: _genData2, 5: _genData3}
 
-glVersions = {1: _genLabel1, 2: _genLabel2, 3: _genLabel3}
+glVersions = {1: _genLabel1, 2: _genLabel2, 3: _genLabel3, 4: _genLabel2, 5: _genLabel3}
 
 # Selector for which function genData function to use
 def genData(aa, csStart, csEnd, cs, gdVer):

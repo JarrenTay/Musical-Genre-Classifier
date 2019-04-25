@@ -1,0 +1,19 @@
+Hip-Hop / Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DX0XUsuxWHRQd
+Hip-Hop / Soul / R&B,spotify:user:spotify:playlist:37i9dQZF1DWY4xHQp97fN6
+Country,spotify:user:spotify:playlist:37i9dQZF1DX1lVhptIYRda
+Country,spotify:user:spotify:playlist:37i9dQZF1DX5mB2C8gBeUM
+EDM,spotify:user:spotify:playlist:37i9dQZF1DX4dyzvuaRJ0n
+EDM,spotify:user:spotify:playlist:37i9dQZF1DX8tZsk68tuDw
+Rock,spotify:user:spotify:playlist:37i9dQZF1DXcF6B6QPhFDv
+Rock,spotify:user:spotify:playlist:37i9dQZF1DX82GYcclJ3Ug
+Folk & Acoustic,spotify:user:spotify:playlist:37i9dQZF1DWYV7OOaGhoH0
+Folk & Acoustic,spotify:user:spotify:playlist:37i9dQZF1DX6z20IXmBjWI
+Classical,spotify:user:spotify:playlist:37i9dQZF1DWWEJlAGA9gs0
+Classical,spotify:user:spotify:playlist:37i9dQZF1DWUvHZA1zLcjW
+Jazz,spotify:user:spotify:playlist:37i9dQZF1DWVqfgj8NZEp1
+Jazz,spotify:user:spotify:playlist:37i9dQZF1DX4wta20PHgwo
+Reggae,spotify:user:spotify:playlist:37i9dQZF1DXbSbnqxMTGx9
+Reggae,spotify:user:spotify:playlist:37i9dQZF1DXan38dNVDdl4
+Blues,spotify:user:spotify:playlist:37i9dQZF1DXbkKnGZHv1kf
+Blues,spotify:user:spotify:playlist:37i9dQZF1DX9stbPFTxeaB
+
